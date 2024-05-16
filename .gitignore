@@ -2,3 +2,5 @@
 .nyc_output
 node_modules
 /coverage
+/.pgpass
+/.get-pg-configrc.json
