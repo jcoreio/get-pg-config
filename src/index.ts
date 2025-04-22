@@ -1,6 +1,5 @@
 import { cosmiconfig } from 'cosmiconfig'
-import { type ClientConfig } from 'pg'
-import ConnectionParameters from 'pg/lib/connection-parameters'
+import { Client, type ClientConfig } from 'pg'
 // @ts-expect-error not typed
 import pgpass from 'pgpass'
 
@@ -15,7 +14,9 @@ export async function getPgConfig(given?: ClientConfig): Promise<ClientConfig> {
       }
     }
   }
-  const defaulted = new ConnectionParameters(base)
+  // const defaulted = new ConnectionParameters(base)
+  const { user, database, password, port, host, ssl } = new Client(base)
+  const defaulted = { user, database, password, port, host, ssl }
   if (base.user) defaulted.user = base.user
   const result = { ...defaulted, password: defaulted.password }
   if (!result.password) {
